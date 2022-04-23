@@ -42,11 +42,11 @@ knowledge2 = And(
     And(Or(AKnight, AKnave), Not(And(AKnight, AKnave))),
     # B is either knight or kanve and not both
     And(Or(BKnight, BKnave), Not(And(BKnight, BKnave))),
-
-    Biconditional(And(AKnight, BKnight), AKnight),
-    Biconditional(Or(
-        (Not(AKnight, BKnight), Not(AKnave, BKnave))),
-        BKnight)
+    # B is a knight if and only if B and A are of different kinds
+    Biconditional(Or(Not(And(AKnight, BKnight)),
+                  Not(And(AKnave, BKnave))), BKnight),
+    # If they're not the same, then A is knave
+    Implication(Not(And(AKnave, BKnave)), AKnave),
 
 
 )
@@ -58,10 +58,20 @@ knowledge2 = And(
 # C says "A is a knight."
 knowledge3 = And(
     # TODO
-    Not(Or(AKnight, AKnave)),
-    Not(BKnave),
-    CKnave,
-    AKnight
+    # A is either knight or knave and not both
+    And(Or(AKnight, AKnave), Not(And(AKnight, AKnave))),
+    # B is either knight or kanve and not both
+    And(Or(BKnight, BKnave), Not(And(BKnight, BKnave))),
+    # C is either knight or kanve and not both
+    And(Or(CKnight, CKnave), Not(And(CKnight, CKnave))),
+
+    # if A's statement is true, then A is a knight
+    Implication(And(Or(AKnight, AKnave), Not(And(AKnight, AKnave))), AKnight),
+    # if A is a knight then B is knave
+    Implication(AKnight, BKnave),
+    # if B is a knave, then C is a knight
+    Implication(BKnave, CKnight)
+
 )
 
 

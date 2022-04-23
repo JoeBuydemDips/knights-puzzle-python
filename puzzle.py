@@ -13,6 +13,10 @@ CKnave = Symbol("C is a Knave")
 # A says "I am both a knight and a knave."
 knowledge0 = And(
     # TODO
+    # A is either knight or knave and not both
+    And(Or(AKnight, AKnave), Not(And(AKnight, AKnave))),
+    Implication(Not(And(AKnight, AKnave)), AKnave)
+
 )
 
 # Puzzle 1
@@ -20,6 +24,13 @@ knowledge0 = And(
 # B says nothing.
 knowledge1 = And(
     # TODO
+    # A is either knight or knave and not both
+    And(Or(AKnight, AKnave), Not(And(AKnight, AKnave))),
+    # B is either knight or kanve and not both
+    And(Or(BKnight, BKnave), Not(And(BKnight, BKnave))),
+    Implication(And(AKnave, BKnave), AKnight),
+    Implication(Not(And(AKnave, BKnave)), AKnave)
+
 )
 
 # Puzzle 2
@@ -27,6 +38,17 @@ knowledge1 = And(
 # B says "We are of different kinds."
 knowledge2 = And(
     # TODO
+    # A is either knight or knave and not both
+    And(Or(AKnight, AKnave), Not(And(AKnight, AKnave))),
+    # B is either knight or kanve and not both
+    And(Or(BKnight, BKnave), Not(And(BKnight, BKnave))),
+
+    Biconditional(And(AKnight, BKnight), AKnight),
+    Biconditional(Or(
+        (Not(AKnight, BKnight), Not(AKnave, BKnave))),
+        BKnight)
+
+
 )
 
 # Puzzle 3
@@ -36,6 +58,10 @@ knowledge2 = And(
 # C says "A is a knight."
 knowledge3 = And(
     # TODO
+    Not(Or(AKnight, AKnave)),
+    Not(BKnave),
+    CKnave,
+    AKnight
 )
 
 
